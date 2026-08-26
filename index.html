@@ -1419,39 +1419,26 @@
 
 
 <!-- BOTTOM NAV -->
-
 <nav class="bottom-nav">
 
-  <button
-    class="nav-item active"
-    onclick="goHome(this)"
-  >
+  <button class="nav-item active" onclick="showPage('home', this)">
     <i data-lucide="house"></i>
-    Home
+    <span>Home</span>
   </button>
 
-  <button
-    class="nav-item"
-    onclick="document.getElementById('products').scrollIntoView(); setActive(this)"
-  >
+  <button class="nav-item" onclick="showPage('shop', this)">
     <i data-lucide="shopping-bag"></i>
-    Shop
+    <span>Shop</span>
   </button>
 
-  <button
-    class="nav-item"
-    onclick="document.getElementById('why').scrollIntoView(); setActive(this)"
-  >
+  <button class="nav-item" onclick="showPage('about', this)">
     <i data-lucide="badge-check"></i>
-    About
+    <span>About</span>
   </button>
 
-  <button
-    class="nav-item"
-    onclick="openCart(); setActive(this)"
-  >
+  <button class="nav-item" onclick="openCart(); setActive(this)">
     <i data-lucide="shopping-cart"></i>
-    Cart
+    <span>Cart</span>
   </button>
 
 </nav>
@@ -2162,6 +2149,82 @@ Thank you.
   updateCart();
 
   lucide.createIcons();
+
+// =============================
+// AKU PAGE NAVIGATION
+// =============================
+
+function showPage(page, button) {
+
+  const main = document.querySelector('main');
+
+  if (!main) return;
+
+  // Remove active state from all navigation buttons
+  document.querySelectorAll('.bottom-nav .nav-item')
+    .forEach(item => item.classList.remove('active'));
+
+  // Activate selected button
+  if (button) {
+    button.classList.add('active');
+  }
+
+  // Get main sections
+  const products = document.getElementById('products');
+  const about = document.getElementById('why');
+
+  // Home
+  if (page === 'home') {
+    main.querySelectorAll(':scope > *').forEach(section => {
+      section.style.display = '';
+    });
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+    return;
+  }
+
+  // Shop
+  if (page === 'shop') {
+
+    main.querySelectorAll(':scope > *').forEach(section => {
+      section.style.display = 'none';
+    });
+
+    if (products) {
+      products.style.display = '';
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+    return;
+  }
+
+  // About
+  if (page === 'about') {
+
+    main.querySelectorAll(':scope > *').forEach(section => {
+      section.style.display = 'none';
+    });
+
+    if (about) {
+      about.style.display = '';
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+    return;
+  }
+}
 
 </script>
 
