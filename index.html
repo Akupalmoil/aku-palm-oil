@@ -2155,75 +2155,55 @@ Thank you.
 // =============================
 
 function showPage(page, button) {
+    const main = document.querySelector('main');
+    if (!main) return;
 
-  const main = document.querySelector('main');
-
-  if (!main) return;
-
-  // Remove active state from all navigation buttons
-  document.querySelectorAll('.bottom-nav .nav-item')
-    .forEach(item => item.classList.remove('active'));
-
-  // Activate selected button
-  if (button) {
-    button.classList.add('active');
-  }
-
-  // Get main sections
-  const products = document.getElementById('products');
-  const about = document.getElementById('why');
-
-  // Home
-  if (page === 'home') {
-    main.querySelectorAll(':scope > *').forEach(section => {
-      section.style.display = '';
+    // Navigation active state
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+        item.classList.remove('active');
     });
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-
-    return;
-  }
-
-  // Shop
-  if (page === 'shop') {
-
-    main.querySelectorAll(':scope > *').forEach(section => {
-      section.style.display = 'none';
-    });
-
-    if (products) {
-      products.style.display = '';
+    if (button) {
+        button.classList.add('active');
     }
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+    // Get the four main sections
+    const home = document.getElementById('home');
+    const products = document.getElementById('products');
+    const about = document.getElementById('why');
+
+    const sections = main.querySelectorAll(':scope > section');
+    const reviews = sections[3];
+
+    // Hide everything first
+    sections.forEach(section => {
+        section.style.display = 'none';
     });
 
-    return;
-  }
-
-  // About
-  if (page === 'about') {
-
-    main.querySelectorAll(':scope > *').forEach(section => {
-      section.style.display = 'none';
-    });
-
-    if (about) {
-      about.style.display = '';
+    // Show only the selected page
+    if (page === 'home') {
+        if (home) home.style.display = '';
     }
 
+    if (page === 'shop') {
+        if (products) products.style.display = '';
+    }
+
+    if (page === 'about') {
+        if (about) about.style.display = '';
+        if (reviews) reviews.style.display = '';
+    }
+
+    // Always start the selected page at the top
     window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+        top: 0,
+        behavior: 'smooth'
     });
 
-    return;
-  }
+    // Refresh icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 }
 
 </script>
